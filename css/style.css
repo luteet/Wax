@@ -652,6 +652,7 @@ body._light-theme .header__logo--img._light-logo {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-user-drag: none;
   -o-object-fit: cover;
      object-fit: cover;
   z-index: -1;
@@ -1168,6 +1169,11 @@ body._light-theme .header__logo--img._light-logo {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
 }
 
 .intro__container {
@@ -1347,6 +1353,11 @@ body._light-theme .header__logo--img._light-logo {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
 }
 
 .get-now__header--title {
@@ -1596,6 +1607,11 @@ body._light-theme .header__logo--img._light-logo {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
 }
 
 .last-transactions__bg--elem._7 {
