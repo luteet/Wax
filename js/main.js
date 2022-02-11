@@ -21,8 +21,8 @@ body.addEventListener('click', function (event) {
 
 
   let themeBtn = thisTarget.closest('._theme-btn');
-  if(themeBtn) {
-    if(themeBtn.classList.contains('_to-light-theme')) {
+  if (themeBtn) {
+    if (themeBtn.classList.contains('_to-light-theme')) {
 
       localStorage.setItem('theme', 'light');
 
@@ -32,7 +32,7 @@ body.addEventListener('click', function (event) {
       body.classList.add('_light-theme');
       body.classList.remove('_dark-theme');
 
-    } else if(themeBtn.classList.contains('_to-dark-theme')) {
+    } else if (themeBtn.classList.contains('_to-dark-theme')) {
 
       localStorage.setItem('theme', 'dark');
 
@@ -84,6 +84,28 @@ body.addEventListener('click', function (event) {
         .catch(err => {
           console.log('Something went wrong', err);
         });
+      function iosCopyToClipboard(el) {
+        var oldContentEditable = el.contentEditable,
+          oldReadOnly = el.readOnly,
+          range = document.createRange();
+
+        el.contentEditable = true;
+        el.readOnly = false;
+        range.selectNodeContents(el);
+
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(range);
+
+        el.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
+
+        el.contentEditable = oldContentEditable;
+        el.readOnly = oldReadOnly;
+
+        document.execCommand('copy');
+      }
+      iosCopyToClipboard(input);
+
     }
 
   }
@@ -150,55 +172,55 @@ scrollPage();
 function randomTransactions(arguments) {
   let listTransactions = document.querySelector('.last-transactions__list');
 
-  let randomSentMax    = (arguments.maxSent) ? arguments.maxSent : 100;
-      randomReceivedMax  = (arguments.maxReceived) ? arguments.maxReceived : 100,
+  let randomSentMax = (arguments.maxSent) ? arguments.maxSent : 100;
+  randomReceivedMax = (arguments.maxReceived) ? arguments.maxReceived : 100,
 
-      maxItems = (arguments.maxItems) ? arguments.maxItems + 1 : 11;
-  
-  
-  if(listTransactions) {
-  
+    maxItems = (arguments.maxItems) ? arguments.maxItems + 1 : 11;
+
+
+  if (listTransactions) {
+
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
-  
-    const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"]; 
-    const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"]; 
+
+    const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"];
     const allNumbers = [..."0123456789"];
-  
+
     const base = [...allNumbers, ...allLowerAlpha];
-  
+
     const generatorAdress = (base, len) => {
       return [...Array(len)]
-        .map(i => base[Math.random()*base.length|0])
+        .map(i => base[Math.random() * base.length | 0])
         .join('');
     };
 
     function appendItem() {
       let address = '0x' + generatorAdress(base, 23),
-    
-      date = new Date(),
-      dateSpan = '';
-      
-      (date.getHours() <= 9) ? dateSpan+= '0' + date.getHours() : dateSpan+= date.getHours();
-      dateSpan+= ':';
-      (date.getMinutes() <= 9) ? dateSpan+= '0' + date.getMinutes() : dateSpan+= date.getMinutes() 
-      dateSpan+= ':';
-      (date.getSeconds() <= 9) ? dateSpan+= '0' + date.getSeconds() : dateSpan+= date.getSeconds(),
-  
-      randowSentValue = getRandomInt(randomSentMax),
-      randowReceivedValue = getRandomInt(randomReceivedMax);
 
-      if(randowSentValue < 2) {
+        date = new Date(),
+        dateSpan = '';
+
+      (date.getHours() <= 9) ? dateSpan += '0' + date.getHours() : dateSpan += date.getHours();
+      dateSpan += ':';
+      (date.getMinutes() <= 9) ? dateSpan += '0' + date.getMinutes() : dateSpan += date.getMinutes()
+      dateSpan += ':';
+      (date.getSeconds() <= 9) ? dateSpan += '0' + date.getSeconds() : dateSpan += date.getSeconds(),
+
+        randowSentValue = getRandomInt(randomSentMax),
+        randowReceivedValue = getRandomInt(randomReceivedMax);
+
+      if (randowSentValue < 2) {
         randowSentValue = 1;
       }
 
-      if(randowReceivedValue < 2) {
+      if (randowReceivedValue < 2) {
         randowReceivedValue = 1;
       }
-  
-      let listItem = 
-      `<li class="last-transactions__item">
+
+      let listItem =
+        `<li class="last-transactions__item">
       <span class="last-transactions__item--elem">
           ${address}
       </span>
@@ -212,49 +234,49 @@ function randomTransactions(arguments) {
           ${dateSpan}
       </span>
       </li>`;
-  
+
       listTransactions.insertAdjacentHTML('afterbegin', listItem);
-  
+
     }
 
-    if(!arguments.disableStart) {
-      for(let index = 0; index < maxItems-1; index++) {
+    if (!arguments.disableStart) {
+      for (let index = 0; index < maxItems - 1; index++) {
         appendItem();
       }
       let items = document.querySelectorAll('.last-transactions__item');
-      if(items[0]) {
-        
+      if (items[0]) {
+
         items.forEach(element => {
           element.classList.add('_visible');
         })
-        
+
       }
     }
-    
 
-    
-  
+
+
+
     setInterval(() => {
-      
-    appendItem();
-  
-    setTimeout(() => {
-      let item = document.querySelectorAll('.last-transactions__item');
-      if(item[0]) {
-        item[0].classList.add('_visible');
-        if(item.length >= maxItems) {
-          item[item.length-1].classList.remove('_visible');
-          setTimeout(() => {
-            item[item.length-1].remove();
-          },(arguments.visibleTimeout) ? arguments.visibleTimeout : 1000);
+
+      appendItem();
+
+      setTimeout(() => {
+        let item = document.querySelectorAll('.last-transactions__item');
+        if (item[0]) {
+          item[0].classList.add('_visible');
+          if (item.length >= maxItems) {
+            item[item.length - 1].classList.remove('_visible');
+            setTimeout(() => {
+              item[item.length - 1].remove();
+            }, (arguments.visibleTimeout) ? arguments.visibleTimeout : 1000);
+          }
         }
-      }
-      
-  
-    },(arguments.visibleTimeout) ? arguments.visibleTimeout : 1000)
-    
-    },(arguments.interval) ? arguments.interval : 3000)
-  
+
+
+      }, (arguments.visibleTimeout) ? arguments.visibleTimeout : 1000)
+
+    }, (arguments.interval) ? arguments.interval : 3000)
+
   }
 }
 
@@ -268,7 +290,7 @@ randomTransactions({
 
   interval: 2000,
   visibleTimeout: 500,
-  
+
   //disableStart: true, // disable append random items onload page
 
 });
