@@ -1233,6 +1233,7 @@ body._light-theme .header__logo--img._light-logo {
 .intro__btn {
   color: transparent;
   background: var(--text-gradient);
+  -webkit-box-decoration-break: clone;
   -webkit-background-clip: text;
           background-clip: text;
   display: -webkit-inline-box;

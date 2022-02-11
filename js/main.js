@@ -38,7 +38,7 @@ const body = document.querySelector('body'),
     else {
       navigator.clipboard.writeText(el.value)
         .then(() => {
-          alert('copied');
+          
         })
         .catch(err => {
           console.log('Something went wrong', err);
