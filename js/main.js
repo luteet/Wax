@@ -119,18 +119,8 @@ body.addEventListener('click', function (event) {
       rng = document.createRange();
 
     if (input) {
-      /* copyToClipboard(input.value); */
-      /* navigator.clipboard.writeText(input.value)
-        .then(() => {
-          alert('copied');
-        })
-        .catch(err => {
-          console.log('Something went wrong', err);
-        }); */
+
       copyToClipboard(input)
-      
-
-
 
     }
 
@@ -198,8 +188,7 @@ scrollPage();
 function randomTransactions(arguments) {
   let listTransactions = document.querySelector('.last-transactions__list');
 
-  let randomSentMax = (arguments.maxSent) ? arguments.maxSent : 100;
-  randomReceivedMax = (arguments.maxReceived) ? arguments.maxReceived : 100,
+  let randomSentMax = (arguments.maxSent) ? arguments.maxSent : 100,
 
     maxItems = (arguments.maxItems) ? arguments.maxItems + 1 : 11;
 
@@ -235,15 +224,13 @@ function randomTransactions(arguments) {
       (date.getSeconds() <= 9) ? dateSpan += '0' + date.getSeconds() : dateSpan += date.getSeconds(),
 
         randowSentValue = getRandomInt(randomSentMax),
-        randowReceivedValue = getRandomInt(randomReceivedMax);
+        randowReceivedValue = randowSentValue * 2;
 
       if (randowSentValue < 2) {
         randowSentValue = 1;
       }
 
-      if (randowReceivedValue < 2) {
-        randowReceivedValue = 1;
-      }
+      
 
       let listItem =
         `<li class="last-transactions__item">
@@ -310,7 +297,6 @@ function randomTransactions(arguments) {
 randomTransactions({
 
   maxSent: 100,
-  maxReceived: 100,
 
   maxItems: 11,
 
