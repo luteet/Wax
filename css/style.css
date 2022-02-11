@@ -590,6 +590,7 @@ body._light-theme {
   --dark-super-light-v2: rgba(255, 219, 236, 0.85);
   --dark-light-v3: #FFFFFF;
   --dark-super-light-v3-text: rgba(228, 239, 255, 0.8);
+  --text-gradient: linear-gradient(126.85deg, #180C26 0%, #715D84 48.96%, #180C26 100%);
 }
 
 body._light-theme .last-transactions__body::before {
