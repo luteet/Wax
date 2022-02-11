@@ -1918,6 +1918,14 @@ body._light-theme .header__logo--img._light-logo {
     padding: 44px 0 44px 30px;
   }
 
+  .header._active .header__nav--list {
+    margin-top: 0px;
+  }
+
+  .header._active .header__nav--row {
+    padding-top: 0;
+  }
+
   .header__body {
     max-width: 70%;
   }
