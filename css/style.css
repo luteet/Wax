@@ -1231,11 +1231,6 @@ body._light-theme .header__logo--img._light-logo {
 }
 
 .intro__btn {
-  color: transparent;
-  background: var(--text-gradient);
-  -webkit-box-decoration-break: clone;
-  -webkit-background-clip: text;
-          background-clip: text;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -1257,6 +1252,15 @@ body._light-theme .header__logo--img._light-logo {
   position: relative;
   -webkit-transition: background-color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out;
+}
+
+.intro__btn span {
+  display: inline-block;
+  color: transparent;
+  background: var(--text-gradient);
+  -webkit-box-decoration-break: clone;
+  -webkit-background-clip: text;
+          background-clip: text;
 }
 
 .intro__btn::before,
