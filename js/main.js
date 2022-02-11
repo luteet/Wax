@@ -5,7 +5,50 @@ const body = document.querySelector('body'),
   burger = document.querySelector('._burger'),
   header = document.querySelector('.header');
 
+function copyToClipboard(str) {
+  var el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style = { position: 'absolute', left: '-9999px' };
+  document.body.appendChild(el);
 
+  if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+    // save current contentEditable/readOnly status
+    var editable = el.contentEditable;
+    var readOnly = el.readOnly;
+
+    // convert to editable with readonly to stop iOS keyboard opening
+    el.contentEditable = true;
+    el.readOnly = true;
+
+    // create a selectable range
+    var range = document.createRange();
+    range.selectNodeContents(el);
+
+    // select the range
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    el.setSelectionRange(0, 999999);
+
+    // restore contentEditable/readOnly to original state
+    el.contentEditable = editable;
+    el.readOnly = readOnly;
+  } else {
+    el.select();
+  }
+
+  navigator.clipboard.writeText(str)
+    .then(() => {
+
+    })
+    .catch(err => {
+      console.log('Something went wrong', err);
+    });
+
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}
 
 let thisTarget;
 body.addEventListener('click', function (event) {
@@ -76,35 +119,10 @@ body.addEventListener('click', function (event) {
       rng = document.createRange();
 
     if (input) {
-      navigator.clipboard.writeText(input.value)
-        .then(() => {
-          // Получилось!
-          input.select();
-        })
-        .catch(err => {
-          console.log('Something went wrong', err);
-        });
-      function iosCopyToClipboard(el) {
-        var oldContentEditable = el.contentEditable,
-          oldReadOnly = el.readOnly,
-          range = document.createRange();
+      copyToClipboard(input.value);
+      input.select();
 
-        el.contentEditable = true;
-        el.readOnly = false;
-        range.selectNodeContents(el);
 
-        var s = window.getSelection();
-        s.removeAllRanges();
-        s.addRange(range);
-
-        el.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
-
-        el.contentEditable = oldContentEditable;
-        el.readOnly = oldReadOnly;
-
-        document.execCommand('copy');
-      }
-      iosCopyToClipboard(input);
 
     }
 
