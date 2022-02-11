@@ -228,7 +228,9 @@ function randomTransactions(arguments) {
 
       if (randowSentValue < 2) {
         randowSentValue = 1;
+        randowReceivedValue = 2;
       }
+      
 
       
 
