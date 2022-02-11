@@ -5,39 +5,49 @@ const body = document.querySelector('body'),
   burger = document.querySelector('._burger'),
   header = document.querySelector('.header');
 
-function copyToClipboard(str) {
-  var el = document.createElement('textarea');
-  el.value = str;
-  el.setAttribute('readonly', '');
-  el.style = { position: 'absolute', left: '-9999px' };
-  document.body.appendChild(el);
+  function copyToClipboard(el) {
 
-  // save current contentEditable/readOnly status
-  var editable = el.contentEditable;
-  var readOnly = el.readOnly;
+    // resolve the element
+    el = (typeof el === 'string') ? document.querySelector(el) : el;
 
-  // convert to editable with readonly to stop iOS keyboard opening
-  el.contentEditable = true;
-  el.readOnly = true;
+    // handle iOS as a special case
+    if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
 
-  // create a selectable range
-  var range = document.createRange();
-  range.selectNodeContents(el);
+        // save current contentEditable/readOnly status
+        var editable = el.contentEditable;
+        var readOnly = el.readOnly;
 
-  // select the range
-  var selection = window.getSelection();
-  selection.removeAllRanges();
-  selection.addRange(range);
-  el.setSelectionRange(0, 999999);
+        // convert to editable with readonly to stop iOS keyboard opening
+        el.contentEditable = true;
+        el.readOnly = true;
 
-  // restore contentEditable/readOnly to original state
-  el.contentEditable = editable;
-  el.readOnly = readOnly;
+        // create a selectable range
+        var range = document.createRange();
+        range.selectNodeContents(el);
 
-  
+        // select the range
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        el.setSelectionRange(0, 999999);
 
-  document.execCommand('copy');
-  document.body.removeChild(el);
+        // restore contentEditable/readOnly to original state
+        el.contentEditable = editable;
+        el.readOnly = readOnly;
+    }
+    else {
+      navigator.clipboard.writeText(el.value)
+        .then(() => {
+          alert('copied');
+        })
+        .catch(err => {
+          console.log('Something went wrong', err);
+        });
+        el.select();
+    }
+
+    // execute copy command
+    document.execCommand('copy');
 }
 
 let thisTarget;
@@ -110,14 +120,15 @@ body.addEventListener('click', function (event) {
 
     if (input) {
       /* copyToClipboard(input.value); */
-      navigator.clipboard.writeText(input.value)
+      /* navigator.clipboard.writeText(input.value)
         .then(() => {
           alert('copied');
         })
         .catch(err => {
           console.log('Something went wrong', err);
-        });
-      input.select();
+        }); */
+      copyToClipboard(input)
+      
 
 
 
