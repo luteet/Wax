@@ -12,39 +12,29 @@ function copyToClipboard(str) {
   el.style = { position: 'absolute', left: '-9999px' };
   document.body.appendChild(el);
 
-  if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-    // save current contentEditable/readOnly status
-    var editable = el.contentEditable;
-    var readOnly = el.readOnly;
+  // save current contentEditable/readOnly status
+  var editable = el.contentEditable;
+  var readOnly = el.readOnly;
 
-    // convert to editable with readonly to stop iOS keyboard opening
-    el.contentEditable = true;
-    el.readOnly = true;
+  // convert to editable with readonly to stop iOS keyboard opening
+  el.contentEditable = true;
+  el.readOnly = true;
 
-    // create a selectable range
-    var range = document.createRange();
-    range.selectNodeContents(el);
+  // create a selectable range
+  var range = document.createRange();
+  range.selectNodeContents(el);
 
-    // select the range
-    var selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    el.setSelectionRange(0, 999999);
+  // select the range
+  var selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  el.setSelectionRange(0, 999999);
 
-    // restore contentEditable/readOnly to original state
-    el.contentEditable = editable;
-    el.readOnly = readOnly;
-  } else {
-    el.select();
-  }
+  // restore contentEditable/readOnly to original state
+  el.contentEditable = editable;
+  el.readOnly = readOnly;
 
-  navigator.clipboard.writeText(str)
-    .then(() => {
-
-    })
-    .catch(err => {
-      console.log('Something went wrong', err);
-    });
+  
 
   document.execCommand('copy');
   document.body.removeChild(el);
@@ -119,7 +109,14 @@ body.addEventListener('click', function (event) {
       rng = document.createRange();
 
     if (input) {
-      copyToClipboard(input.value);
+      /* copyToClipboard(input.value); */
+      navigator.clipboard.writeText(input.value)
+        .then(() => {
+          alert('copied');
+        })
+        .catch(err => {
+          console.log('Something went wrong', err);
+        });
       input.select();
 
 
