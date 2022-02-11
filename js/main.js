@@ -186,8 +186,16 @@ function randomTransactions(arguments) {
       dateSpan+= ':';
       (date.getSeconds() <= 9) ? dateSpan+= '0' + date.getSeconds() : dateSpan+= date.getSeconds(),
   
-      randowSentValue = (getRandomInt(randomSentMax) > 0) ? getRandomInt(randomSentMax) : 1,
-      randowReceivedValue = (getRandomInt(randomReceivedMax) > 0) ? getRandomInt(randomReceivedMax) : 1;
+      randowSentValue = getRandomInt(randomSentMax),
+      randowReceivedValue = getRandomInt(randomReceivedMax);
+
+      if(randowSentValue < 2) {
+        randowSentValue = 1;
+      }
+
+      if(randowReceivedValue < 2) {
+        randowReceivedValue = 1;
+      }
   
       let listItem = 
       `<li class="last-transactions__item">
