@@ -200,10 +200,11 @@ function randomTransactions(arguments) {
     }
 
     const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    const allCapsAlpha2 = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
     const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"];
     const allNumbers = [..."0123456789"];
 
-    const base = [...allNumbers, ...allLowerAlpha];
+    const base = [...allNumbers, ...allCapsAlpha, ...allLowerAlpha, ...allCapsAlpha2];
 
     const generatorAdress = (base, len) => {
       return [...Array(len)]
@@ -212,7 +213,7 @@ function randomTransactions(arguments) {
     };
 
     function appendItem() {
-      let address = '0x' + generatorAdress(base, 23),
+      let address = '0x' + generatorAdress(base, 40),
 
         date = new Date(),
         dateSpan = '';
